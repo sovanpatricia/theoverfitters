@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" viewBox="0 0 680 620">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <style>
+    text { font-family: Arial, sans-serif; fill: #1a1a1a; }
+    .th  { font-size: 14px; font-weight: 600; }
+    .ts  { font-size: 12px; font-weight: 400; fill: #444; }
+    .arr { stroke: #555; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    .leader { stroke: #999; stroke-width: 0.8; stroke-dasharray: 3 3; fill: none; }
+    .box-purple { fill: #EEEDFE; stroke: #534AB7; stroke-width: 0.8; }
+    .box-teal   { fill: #E1F5EE; stroke: #0F6E56; stroke-width: 0.8; }
+    .box-coral  { fill: #FAECE7; stroke: #993C1D; stroke-width: 0.8; }
+    .box-gray   { fill: #F1EFE8; stroke: #5F5E5A; stroke-width: 0.8; }
+    .txt-purple { fill: #3C3489; }
+    .txt-teal   { fill: #085041; }
+    .txt-coral  { fill: #712B13; }
+    .txt-gray   { fill: #444441; }
+    .txt-sub-purple { fill: #534AB7; }
+    .txt-sub-teal   { fill: #0F6E56; }
+    .txt-sub-coral  { fill: #993C1D; }
+    .txt-sub-gray   { fill: #5F5E5A; }
+  </style>
+
+  <!-- User mood input -->
+  <rect x="230" y="20" width="220" height="52" rx="8" class="box-purple"/>
+  <text class="th txt-purple" x="340" y="42" text-anchor="middle" dominant-baseline="central">User mood input</text>
+  <text class="ts txt-sub-purple" x="340" y="60" text-anchor="middle" dominant-baseline="central">"I'm feeling nostalgic, it's raining"</text>
+
+  <line x1="340" y1="72" x2="340" y2="100" class="arr"/>
+
+  <!-- Toxicity filter -->
+  <rect x="230" y="100" width="220" height="52" rx="8" class="box-coral"/>
+  <text class="th txt-coral" x="340" y="120" text-anchor="middle" dominant-baseline="central">Toxicity filter</text>
+  <text class="ts txt-sub-coral" x="340" y="138" text-anchor="middle" dominant-baseline="central">Block harmful or offensive inputs</text>
+
+  <!-- Reject branch -->
+  <line x1="450" y1="126" x2="560" y2="126" class="arr" stroke-dasharray="4 3"/>
+  <rect x="562" y="104" width="100" height="44" rx="8" class="box-gray"/>
+  <text class="ts txt-gray" x="612" y="126" text-anchor="middle" dominant-baseline="central">Rejected ✕</text>
+
+  <line x1="340" y1="152" x2="340" y2="180" class="arr"/>
+
+  <!-- Prompt engineering -->
+  <rect x="230" y="180" width="220" height="52" rx="8" class="box-teal"/>
+  <text class="th txt-teal" x="340" y="200" text-anchor="middle" dominant-baseline="central">Prompt engineering</text>
+  <text class="ts txt-sub-teal" x="340" y="218" text-anchor="middle" dominant-baseline="central">Role prompt + few-shot examples</text>
+
+  <line x1="340" y1="232" x2="340" y2="260" class="arr"/>
+
+  <!-- RAG retrieval -->
+  <rect x="230" y="260" width="220" height="52" rx="8" class="box-teal"/>
+  <text class="th txt-teal" x="340" y="280" text-anchor="middle" dominant-baseline="central">RAG retrieval</text>
+  <text class="ts txt-sub-teal" x="340" y="298" text-anchor="middle" dominant-baseline="central">Cosine similarity over lyrics</text>
+
+  <!-- ChromaDB side -->
+  <rect x="34" y="268" width="148" height="44" rx="8" class="box-gray"/>
+  <text class="th txt-gray" x="108" y="286" text-anchor="middle" dominant-baseline="central">ChromaDB</text>
+  <text class="ts txt-sub-gray" x="108" y="302" text-anchor="middle" dominant-baseline="central">Lyrics vector index</text>
+  <line x1="182" y1="290" x2="228" y2="290" class="arr"/>
+
+  <!-- sentence-transformers side -->
+  <rect x="34" y="200" width="148" height="44" rx="8" class="box-gray"/>
+  <text class="th txt-gray" x="108" y="218" text-anchor="middle" dominant-baseline="central">sentence-transformers</text>
+  <text class="ts txt-sub-gray" x="108" y="234" text-anchor="middle" dominant-baseline="central">all-MiniLM-L6-v2</text>
+  <line x1="108" y1="244" x2="108" y2="268" class="arr"/>
+
+  <line x1="340" y1="312" x2="340" y2="340" class="arr"/>
+
+  <!-- LM Studio -->
+  <rect x="230" y="340" width="220" height="52" rx="8" class="box-purple"/>
+  <text class="th txt-purple" x="340" y="360" text-anchor="middle" dominant-baseline="central">LM Studio (local SLM)</text>
+  <text class="ts txt-sub-purple" x="340" y="378" text-anchor="middle" dominant-baseline="central">Mistral 7B / LLaMA 3.2 3B</text>
+
+  <!-- Audio features side -->
+  <rect x="498" y="264" width="148" height="60" rx="8" class="box-gray"/>
+  <text class="th txt-gray" x="572" y="284" text-anchor="middle" dominant-baseline="central">Audio features</text>
+  <text class="ts txt-sub-gray" x="572" y="300" text-anchor="middle" dominant-baseline="central">Valence, energy,</text>
+  <text class="ts txt-sub-gray" x="572" y="316" text-anchor="middle" dominant-baseline="central">danceability, BPM</text>
+  <line x1="498" y1="294" x2="452" y2="294" class="arr"/>
+
+  <line x1="340" y1="392" x2="340" y2="420" class="arr"/>
+
+  <!-- Hallucination guard -->
+  <rect x="230" y="420" width="220" height="52" rx="8" class="box-coral"/>
+  <text class="th txt-coral" x="340" y="440" text-anchor="middle" dominant-baseline="central">Hallucination guard</text>
+  <text class="ts txt-sub-coral" x="340" y="458" text-anchor="middle" dominant-baseline="central">Cross-check songs vs dataset</text>
+
+  <!-- Reject branch hallucination -->
+  <line x1="450" y1="446" x2="560" y2="446" class="arr" stroke-dasharray="4 3"/>
+  <rect x="562" y="424" width="100" height="44" rx="8" class="box-gray"/>
+  <text class="ts txt-gray" x="612" y="446" text-anchor="middle" dominant-baseline="central">Removed ✕</text>
+
+  <line x1="340" y1="472" x2="340" y2="500" class="arr"/>
+
+  <!-- Output -->
+  <rect x="230" y="500" width="220" height="52" rx="8" class="box-purple"/>
+  <text class="th txt-purple" x="340" y="520" text-anchor="middle" dominant-baseline="central">Song recommendations</text>
+  <text class="ts txt-sub-purple" x="340" y="538" text-anchor="middle" dominant-baseline="central">Ranked list + mood explanations</text>
+
+  <!-- Dataset note -->
+  <text class="ts" x="340" y="585" text-anchor="middle" style="fill:#666">Dataset: Spotify Audio Features + Lyrics (Kaggle)</text>
+  <line x1="220" y1="578" x2="108" y2="578" class="leader"/>
+  <line x1="108" y1="578" x2="108" y2="248" class="leader"/>
+</svg>

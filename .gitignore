@@ -1,0 +1,6 @@
+data/chroma_db/
+data/spotify_lyrics.csv
+data/processed.csv
+__pycache__/
+*.pyc
+.env
