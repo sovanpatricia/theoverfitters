@@ -21,6 +21,7 @@ from openai import OpenAI
 
 sys.path.insert(0, os.path.dirname(__file__))
 from embeddings import retriever
+from mood_detector import detect_mood_profile
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s — %(message)s")
 log = logging.getLogger(__name__)
@@ -488,11 +489,12 @@ def generate_recommendations(mood: str, k: int = TOP_K) -> tuple[list[dict], str
     if pinned:
         log.info(f"Pinned songs: {[(s['track_name'], s['track_artist']) for s in pinned]}")
 
-    profile = _detect_mood_profile(mood)
+    profile, matched_keywords = detect_mood_profile(mood)
     if profile:
-        log.info(f"Mood profile detected: {profile}")
+        log.info(f"Mood profile detected via: {matched_keywords}")
+        log.info(f"Audio profile: {profile}")
     else:
-        log.info("No specific mood profile detected — using semantic search only")
+        log.info("No mood profile matched — using semantic search only")
 
     # Step 2 — Detect genre requirement (use fallback if requested genre not in dataset)
     mood_lower = mood.lower()
