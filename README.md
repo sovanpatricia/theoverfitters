@@ -1,5 +1,5 @@
 # Music Mood Matcher
-**Team: The Overfitters** 
+**Team: The Overfitters** — Big Data & AI Lab, UBB Cluj-Napoca
 
 > Describe how you feel. Get songs that match your mood — with explanations.
 
@@ -27,6 +27,7 @@ the overfitters/
 │   ├── toxicity.py               ← input safety filter
 │   ├── genre_balance.py          ← dataset balancing analysis
 │   ├── embeddings.py             ← lyrics → ChromaDB vector index
+│   ├── mood_detector.py          ← hybrid keyword + semantic mood detection
 │   ├── rag.py                    ← hybrid retrieval + prompt engineering
 │   └── hallucination.py          ← output verification against dataset
 ├── main.py                       ← FastAPI backend
@@ -94,7 +95,7 @@ Toxicity filter          keyword + phrase + regex blocking
         ↓
 Dataset coverage check   detects missing genres, shows fallback notice
         ↓
-Mood profile detection   maps keywords → audio feature ranges
+Hybrid mood detection    keyword matching + semantic synonym matching
         ↓
 Hybrid RAG retrieval     ChromaDB semantic search + genre filter
         ↓
@@ -106,6 +107,29 @@ Hallucination guard      cross-checks suggestions against dataset
         ↓
 Song recommendations
 ```
+
+---
+
+## Hybrid Mood Detection
+
+Mood detection combines two approaches:
+
+**Keyword matching** — direct, fast, explicit. Detects known terms like `"bachata"`, `"gym"`, `"chill"`, `"rainy"` and maps them to audio feature ranges (valence, energy, danceability).
+
+**Semantic synonym matching** — catches paraphrases, synonyms, and artist/vibe references that don't contain the exact keyword:
+
+| Input | Detected as |
+|---|---|
+| `"feeling blue and gloomy"` | sad |
+| `"pumped up and ready"` | energetic |
+| `"Billie Eilish vibes"` | sad |
+| `"tame impala vibes"` | chill |
+| `"can't sleep, 3am overthinking"` | sleep + anxious + night |
+| `"celebrating my birthday, let's go wild"` | euphoric + party |
+| `"rainy sunday, looking at old photos"` | rainy + nostalgic |
+| `"I don't know how I feel"` | no match → pure semantic search |
+
+When multiple keywords match, their audio ranges are intersected to find the overlap. If intersection is empty, the union is used as a fallback.
 
 ---
 
@@ -124,6 +148,7 @@ Song recommendations
 
 ## Key Features
 
+- **Hybrid mood detection** — keyword + semantic synonym matching catches vibe references like "Billie Eilish vibes" or "tame impala vibes"
 - **Hybrid retrieval** — combines semantic lyric similarity with audio feature filtering so "dancing bachata" returns high-danceability latin tracks, not just any song mentioning dancing
 - **Dataset-aware fallbacks** — automatically detects when a requested genre (jazz, metal, bachata, k-pop) is not in the dataset and shows a tailored notice with the closest available alternative
 - **Pinned songs** — special handling for edge cases (e.g. Romanian music always surfaces Dragostea Din Tei by O-Zone)
@@ -137,7 +162,7 @@ Song recommendations
 
 - No bachata, jazz, country, metal, or k-pop in the dataset (only 6 Spotify playlist genres)
 - LLaMA 3.2 3B is a small model — a larger model would produce better explanations
-- Mood detection is keyword-based, not semantic — "I feel like Billie Eilish" won't trigger a profile
+- Semantic synonym matching uses string matching, not true vector similarity — a future version could embed mood descriptions and compare them to keyword embeddings
 - 5,174 songs is a small corpus — a larger dataset would improve recommendation diversity
 - Romanian music is almost absent (only Dragostea Din Tei by O-Zone)
 
